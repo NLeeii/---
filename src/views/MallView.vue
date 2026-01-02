@@ -14,7 +14,7 @@ import fishOilImg from '@/assets/images/08.jpg' // 測試用
     <h3>商品卡片</h3>
 
     <ProductCard 
-    :image="fishOilImg" title="頂級深海rTG魚油" spec="60錠/瓶" :price="1280" />
+    :image="fishOilImg" title="頂級深海rTG魚油" spec="60錠/瓶" :price="1280" tag="熱銷"/>
 
   </div>
 </template>

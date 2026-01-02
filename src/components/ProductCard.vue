@@ -1,41 +1,59 @@
 <script setup>
+// 設定props主要是為了可以拿取即時更新的資料
 defineProps({
   id: Number,
   image: String,
   title: String,
-  spec: String, // 規格
-  price: Number
+  spec: String, // 商品規格
+  price: Number,
+  tag: String
 })
+
+// 加入購物車
+const addToCart = () => {
+  console.log('加入購物車，但不會跳轉頁面！');
+}
+
 </script>
 <template>
-  <div class="product_card">
+  <router-link :to="`/product/${id}`" class="product_card">
     <div class="card_img">
       <img v-if="image" :src="image" :alt="title">
-      <div v-else>尚無圖片</div>
-      <div class="product_tag">熱銷</div>
+      <div v-else class="no_img">尚無圖片</div>
+      <div v-if="tag" class="product_tag">{{ tag }}</div>
     </div>
 
     <div class="card_body">
       <h3 class="product_title">{{ title }}</h3>
       <p class="product_price">${{ price }}</p>
       <div class="card_button">
-        <a href="#">加入購物車</a>
+        <button type="button" @click.prevent="addToCart">加入購物車</button>
       </div>
     </div>
-  </div>
+  </router-link>
 </template>
 
 <style lang="scss" scoped>
 .product_card {
-  box-shadow: 0 4px 10px rgba(0, 0, 0, .25);
-  border-radius: 10px 10px 0 0;
+  display: block;       
+  text-decoration: none;
+  color: inherit;
+  box-shadow: $shadow;
+  border-radius: 10px;
+  background-color: $white;
+  transition: transform 0.3s;
+
+  &:hover {
+    transform: translateY(-5px);
+  }
 
   .card_img {
     width: 100%;
     position: relative;
+    border-radius: 10px 10px 0 0;
+    overflow: hidden;
 
     img {
-      border-radius: 10px 10px 0 0;
       display: block;
       width: 100%;
       height: 100%;
@@ -59,9 +77,6 @@ defineProps({
     display: flex;
     flex-direction: column;
     gap: 16px;
-    flex: 1;
-    background-color: $white;
-    border-radius: 0 0 10px 10px;
 
     .product_title {
       @include subtitle2(true);
@@ -74,19 +89,22 @@ defineProps({
 
     .card_button {
       background-color: $primaryDark;
-      color: $white;
-      @include body2(true);
       text-align: center;
       border-radius: 5px;
       transition: all .3s;
 
-      a {
-        display: block;
-        padding: 8px;
-      }
-
       &:hover {
         background-color: $primary;
+      }
+
+      button {
+        width: 100%;       
+        border: none;      
+        background: none;  
+        color: $white;
+        padding: 8px;
+        cursor: pointer;
+        @include body2(true);
       }
     }
   }
